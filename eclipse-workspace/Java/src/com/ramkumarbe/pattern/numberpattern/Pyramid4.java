@@ -3,15 +3,15 @@ package com.ramkumarbe.pattern.numberpattern;
 import java.util.Scanner;
 
 public class Pyramid4 {
-	public static void main(String[] args) {
+	
+	public static void function() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number: ");
+		System.out.println("Enter the Number: ");
 		int n = sc.nextInt();
-		
-		printPyramid4(n);
+		printPyramid(n);
 	}
-
-	private static void printPyramid4(int n) {
+	
+	private static void printPyramid(int n) {
 		for(int i=1; i<=n; i++) {
 			for(int k=1; k<=n; k++) {
 				if(k<=n-i)

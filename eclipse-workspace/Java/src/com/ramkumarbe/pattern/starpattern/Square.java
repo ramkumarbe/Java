@@ -2,16 +2,16 @@ package com.ramkumarbe.pattern.starpattern;
 
 import java.util.Scanner;
 
-public class Pattern11 {
-	public static void main(String[] args) {
+public class Square {
+	
+	public static void function() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number: ");
+		System.out.println("Enter the Number: ");
 		int n = sc.nextInt();
-		
-		printPattern11(n);
+		printPattern(n);
 	}
-
-	private static void printPattern11(int n) {
+	
+	private static void printPattern(int n) {
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<n; j++) {
 				System.out.print("*");

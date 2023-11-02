@@ -2,16 +2,16 @@ package com.ramkumarbe.pattern.starpattern;
 
 import java.util.Scanner;
 
-public class Pattern12 {
-	public static void main(String[] args) {
+public class HollowSquare {
+	
+	public static void function() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number: ");
+		System.out.println("Enter the Number: ");
 		int n = sc.nextInt();
-		
-		printPattern12(n);
+		printPattern(n);
 	}
-
-	private static void printPattern12(int n) {
+	
+	private static void printPattern(int n) {
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<n; j++) {
 				if(i==0 || j==0 || i==n-1 || j==n-1)

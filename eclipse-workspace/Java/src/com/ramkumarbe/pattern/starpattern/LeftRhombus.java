@@ -2,18 +2,18 @@ package com.ramkumarbe.pattern.starpattern;
 
 import java.util.Scanner;
 
-public class Pattern6 {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number: ");
-		int n = sc.nextInt();
-		
-		printPattern6(n);
-	}
+public class LeftRhombus {
 
-	private static void printPattern6(int n) {
+	public static void function() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the Number: ");
+		int n = sc.nextInt();
+		printPattern(n);
+	}
+	
+	private static void printPattern(int n) {
 		for(int i=0; i<n; i++) {
-			for(int k=n; k>i; k--) {
+			for(int k=0; k<i; k++) {
 				System.out.print(" ");
 			}
 			for(int j=0; j<n; j++) {

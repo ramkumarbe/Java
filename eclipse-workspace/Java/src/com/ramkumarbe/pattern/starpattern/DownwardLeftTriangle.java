@@ -2,18 +2,20 @@ package com.ramkumarbe.pattern.starpattern;
 
 import java.util.Scanner;
 
-public class Pattern2 {
-
-	public static void main(String[] args) {
+public class DownwardLeftTriangle {
+	
+	public static void function() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the number: ");
+		System.out.println("Enter the Number: ");
 		int n = sc.nextInt();
-		
-		printPattern2(n);
+		printPattern(n);
 	}
-
-	private static void printPattern2(int n) {
+	
+	private static void printPattern(int n) {
 		for(int i=0; i<n; i++) {
+			for(int k=0; k<i; k++) {
+				System.out.print(" ");
+			}
 			for(int j=0; j<n-i; j++) {
 				if(i==0 || j==0 || j==n-i-1)
 				   System.out.print("*");
@@ -23,5 +25,4 @@ public class Pattern2 {
 			System.out.println();
 		}
 	}
-
 }
