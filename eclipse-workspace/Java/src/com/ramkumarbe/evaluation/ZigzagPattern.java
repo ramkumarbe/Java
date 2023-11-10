@@ -39,7 +39,7 @@ public class ZigzagPattern {
 		}
 		for (char[] ar : arr) {
 			for (char c : ar) {
-				System.out.print(c + " ");
+				System.out.print(c+" ");
 			}
 			System.out.println();
 		}
