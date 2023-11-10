@@ -15,6 +15,10 @@ public class ZigzagPattern {
 	}
 
 	private static void printZigzagPattern(String s, int n) {
+		if(n==1) {
+			System.out.println(s);
+			return;
+		}
 		int len = s.length(), index = 0;
 		int row = 0, col = 0;
 		boolean upward = false;
