@@ -6,13 +6,11 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class InterviewPanel {
 
 	static Queue<String> queue = new LinkedList<>();
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
         int choice;
 
@@ -23,7 +21,7 @@ public class InterviewPanel {
             System.out.println("1. Enter candidate details");
             System.out.println("2. Waiting List");
             System.out.println("0. Exit");
-            System.out.print("Enter your choice: ");
+            System.out.println("Enter your choice: ");
             choice = sc.nextInt();
             sc.nextLine();  
 
@@ -32,13 +30,13 @@ public class InterviewPanel {
                     System.out.print("Enter the candidate name: ");
                     String name = sc.nextLine();
                     queue.add(name);
-                    System.out.println(name + " added to the queue.");
                 }
                 case 2 -> {
                 	System.out.println(queue);
                 }
                 case 0 -> {
                     System.out.println("Exiting program.");
+                    return;
                 }
                 default -> {
                     System.out.println("Invalid choice. Please try again.");
@@ -54,13 +52,12 @@ public class InterviewPanel {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				while (!queue.isEmpty()) {
-					System.out.println(queue.poll() + " is completed.");
+				if (!queue.isEmpty()) {
+					System.out.println("The interview process is completed for "+queue.poll()+".");
 				}
 			}
 		};
-		timer.schedule(timerTask, 7000, 20000);
+		timer.schedule(timerTask, 15000, 15000);
 
 	}
-
 }
