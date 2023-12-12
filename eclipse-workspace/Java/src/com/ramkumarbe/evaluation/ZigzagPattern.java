@@ -1,6 +1,5 @@
 package com.ramkumarbe.evaluation;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class ZigzagPattern {
@@ -32,11 +31,12 @@ public class ZigzagPattern {
 			}
 			if (upward) {
 				row--;
-				col++;
 			} else {
 				row++;
+				col++;
 			}
 		}
+		
 		for (char[] ar : arr) {
 			for (char c : ar) {
 				System.out.print(c+" ");

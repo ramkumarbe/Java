@@ -1,6 +1,5 @@
 package com.ramkumarbe.evaluation;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SpiralPattern {
@@ -14,29 +13,30 @@ public class SpiralPattern {
 
 	private static void spiralPattern(int n) {
 		int[][] arr = new int[n][n];
-		int top=0, bottom=n-1, left=0, right=n-1, num=1;
-		while(top<bottom||left<right) {
-			for(int i=top; i<=bottom; i++) {
-				arr[i][left+i] = num++;
-			}
-			left++;
-			bottom--;
-			for(int i=bottom; i>=top; i--) {
-				arr[i][right] = num++;
+		int top = 0, bottom = n - 1, left = 0, right = n - 1, num = 1;
+		while (top <= bottom || left <= right) {
+			for (int i = top; i <= bottom; i++) {
+				arr[i][i-left] = num++;
 			}
 			right--;
-			for(int i=right; i>=left; i--) {
-				if(i==left&&top!=0)
-					break;
-				arr[top][i] = num++;
+			top++;
+			
+			for (int i = right; i >= left; i--) {
+				arr[bottom][i] = num++;
+			}
+			bottom--;
+			right--;
+
+			for (int i = bottom; i >= top; i--) {
+				arr[i][left] = num++;
 			}
 			top++;
-			bottom--;
+			left++;
 		}
-		for(int[] ar:arr) {
-			for(int i:ar) {
-				if(i!=0)
-				    System.out.printf("%3d",i);
+		for (int[] ar : arr) {
+			for (int i : ar) {
+				if (i != 0)
+					System.out.printf("%3d", i);
 				else
 					System.out.print("   ");
 			}

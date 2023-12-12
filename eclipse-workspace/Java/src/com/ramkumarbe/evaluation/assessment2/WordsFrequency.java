@@ -1,6 +1,9 @@
 package com.ramkumarbe.evaluation.assessment2;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -37,11 +40,18 @@ public class WordsFrequency {
 				word = new StringBuilder();
 			}
 		}
-		printWords(map);
+		List<Map.Entry<String,Integer>> sortedList = sortMap(map);
+		printWords(sortedList);
 	}
 
-	private void printWords(Map<String, Integer> map) {
-		for(Map.Entry<String, Integer> entry:map.entrySet()) {
+	private List<Map.Entry<String,Integer>> sortMap(Map<String, Integer> map) {
+		List<Map.Entry<String,Integer>> list = new ArrayList<>(map.entrySet());
+		Collections.sort(list, (e1,e2)-> e2.getValue()-e1.getValue());
+		return list;
+	}
+
+	private void printWords(List<Map.Entry<String,Integer>> list) {
+		for(Map.Entry<String, Integer> entry:list) {
 			System.out.print(entry.getKey()+"-"+entry.getValue()+", ");
 		}
 	}

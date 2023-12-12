@@ -23,8 +23,6 @@ public class ExpressionValidation {
 			char c = arr[i];
 			if(stack.isEmpty()&& c==')')
 				return false;
-			if(c==')' && stack.peek()!='(')
-				return false;
 			if(c=='(') {
 				stack.push(c);
 				continue;
@@ -35,9 +33,9 @@ public class ExpressionValidation {
 			}
 			if((i==0||i==arr.length-1)&& !Character.isLetterOrDigit(c))
 				return false;
-			if(!Character.isLetterOrDigit(c)&&!Character.isLetterOrDigit(arr[i-1])&&arr[i-1]!='('&&arr[i-1]!=')')
+			if(!Character.isLetterOrDigit(c)&&!Character.isLetterOrDigit(arr[i-1])&&arr[i-1]!=')')
 				return false; 
-			if(!Character.isLetterOrDigit(c)&&!Character.isLetterOrDigit(arr[i+1])&&arr[i+1]!='('&&arr[i+1]!=')')
+			if(!Character.isLetterOrDigit(c)&&!Character.isLetterOrDigit(arr[i+1])&&arr[i+1]!='(')
 			    return false;
 		}
 		return stack.isEmpty();
