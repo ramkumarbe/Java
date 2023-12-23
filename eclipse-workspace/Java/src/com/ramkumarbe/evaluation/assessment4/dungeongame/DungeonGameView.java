@@ -29,28 +29,28 @@ public class DungeonGameView {
 		}while(!validInput);
 		dungeonGameViewModel.addAdventurerPosition(length, breadth);
 		
-		do {
-			System.out.println("Position of Monster: ");
-			length = getInt()-1;
-			breadth = getInt()-1;
-			validInput = dungeonGameViewModel.isValidInput(length,breadth);
-			if(!validInput) {
-				System.out.println("Enter the position which is inside the Area: ");
-			}
-		}while(!validInput);
-		dungeonGameViewModel.addMonsterPosition(length, breadth);
-
-		do {
-			System.out.println("Position of Trigger: ");
-			length = getInt()-1;
-			breadth = getInt()-1;
-			validInput = dungeonGameViewModel.isValidInput(length,breadth);
-			if(!validInput) {
-				System.out.println("Enter the position which is inside the Area: ");
-			}
-		}while(!validInput);
-		dungeonGameViewModel.addTriggerPosition(length, breadth);
-		
+//		do {
+//			System.out.println("Position of Monster: ");
+//			length = getInt()-1;
+//			breadth = getInt()-1;
+//			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+//			if(!validInput) {
+//				System.out.println("Enter the position which is inside the Area: ");
+//			}
+//		}while(!validInput);
+//		dungeonGameViewModel.addMonsterPosition(length, breadth);
+//
+//		do {
+//			System.out.println("Position of Trigger: ");
+//			length = getInt()-1;
+//			breadth = getInt()-1;
+//			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+//			if(!validInput) {
+//				System.out.println("Enter the position which is inside the Area: ");
+//			}
+//		}while(!validInput);
+//		dungeonGameViewModel.addTriggerPosition(length, breadth);
+//		
 		do {
 			System.out.println("Position of Gold: ");
 			length = getInt()-1;
@@ -62,6 +62,20 @@ public class DungeonGameView {
 		}while(!validInput);
 		dungeonGameViewModel.addGoldPosition(length, breadth);
 		
+		System.out.print("Enter the number of Pits: ");
+		int numberOfPits = getInt();
+		for(int i=0; i<numberOfPits; i++) {
+			do {
+				System.out.println("Position of Pit: ");
+				length = getInt()-1;
+				breadth = getInt()-1;
+				validInput = dungeonGameViewModel.isValidInput(length,breadth);
+				if(!validInput) {
+					System.out.println("Enter the position which is inside the Area: ");
+				}
+			}while(!validInput);
+			dungeonGameViewModel.addPitPosition(length, breadth);
+		}
 		
 		
 //		dungeonGameViewModel.printStartingPosition();
