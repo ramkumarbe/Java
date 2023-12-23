@@ -41,6 +41,17 @@ public class DungeonGameView {
 		dungeonGameViewModel.addMonsterPosition(length, breadth);
 
 		do {
+			System.out.println("Position of Trigger: ");
+			length = getInt()-1;
+			breadth = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			if(!validInput) {
+				System.out.println("Enter the position which is inside the Area: ");
+			}
+		}while(!validInput);
+		dungeonGameViewModel.addTriggerPosition(length, breadth);
+		
+		do {
 			System.out.println("Position of Gold: ");
 			length = getInt()-1;
 			breadth = getInt()-1;
