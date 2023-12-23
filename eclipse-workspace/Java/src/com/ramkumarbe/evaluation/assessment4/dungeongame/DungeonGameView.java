@@ -12,38 +12,46 @@ public class DungeonGameView {
 	
 	public void start() {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter the length of the Area: ");
+		System.out.print("Dimensions of the dungeon(Row x Column): ");
 		int length = getInt();
-		System.out.print("Enter the breadth of the Area: ");
 		int breadth = getInt();
 		dungeonGameViewModel.getArea(length,breadth);
 		
 		boolean validInput;
 		do {
-			System.out.println("Enter the position of the Adventurer: ");
-			System.out.print("Row: ");
+			System.out.println("Position of Adventurer: ");
 			length = getInt()-1;
-			System.out.print("Column: ");
 			breadth = getInt()-1;
 			validInput = dungeonGameViewModel.isValidInput(length,breadth);
 			if(!validInput) {
-				System.out.println("Enter the value which is inside the Area: ");
+				System.out.println("Enter the position which is inside the Area: ");
 			}
 		}while(!validInput);
 		dungeonGameViewModel.addAdventurerPosition(length, breadth);
 		
 		do {
-			System.out.println("Enter the position of the Gold: ");
-			System.out.print("Row: ");
+			System.out.println("Position of Gold: ");
 			length = getInt()-1;
-			System.out.print("Column: ");
 			breadth = getInt()-1;
 			validInput = dungeonGameViewModel.isValidInput(length,breadth);
 			if(!validInput) {
-				System.out.println("Enter the value which is inside the Area: ");
+				System.out.println("Enter the position which is inside the Area: ");
 			}
 		}while(!validInput);
 		dungeonGameViewModel.addGoldPosition(length, breadth);
+		
+		do {
+			System.out.println("Position of Monster: ");
+			length = getInt()-1;
+			breadth = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			if(!validInput) {
+				System.out.println("Enter the position which is inside the Area: ");
+			}
+		}while(!validInput);
+		dungeonGameViewModel.addMonsterPosition(length, breadth);
+		
+		
 		
 //		dungeonGameViewModel.printStartingPosition();
 		dungeonGameViewModel.findMinimumSteps();
@@ -65,7 +73,11 @@ public class DungeonGameView {
 	}
 
 	public void printResult(int numberOfSteps) {
-		System.out.println("Minimum number of steps to get the gold is "+numberOfSteps);
+		System.out.println("Minimum number of steps to get the gold is "+numberOfSteps+".");
+	}
+
+	public void printResult(String result) {
+		System.out.println(result);
 	}
 
 //	public void printArea(char[][] area) {

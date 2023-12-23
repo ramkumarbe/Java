@@ -14,6 +14,7 @@ public class DungeonGameViewModel {
 	char[][] area;
 	int[] positionOfAdventurer = new int[2];
 	int[] positionOfGold = new int[2];
+	int[] positionOfMonster = new int[2];
 	
 	public void getArea(int length, int breadth) {
 		dungeonArea = new DungeonArea(length,breadth);
@@ -34,9 +35,23 @@ public class DungeonGameViewModel {
 	}
 	
 	public void findMinimumSteps() {
-		int horizontalDifference = Math.abs(positionOfGold[0]-positionOfAdventurer[0]);
-		int verticalDifference = Math.abs(positionOfGold[1]-positionOfAdventurer[1]);
-		dungeonGameView.printResult(horizontalDifference+verticalDifference);
+		int adventureHorizontalDifference = Math.abs(positionOfGold[0]-positionOfAdventurer[0]);
+		int adventureVerticalDifference = Math.abs(positionOfGold[1]-positionOfAdventurer[1]);
+		int monsterHorizontalDifference = Math.abs(positionOfGold[0]-positionOfMonster[0]);
+		int monsterVerticalDifference = Math.abs(positionOfGold[1]-positionOfMonster[1]);
+		int adventureMinSteps = adventureHorizontalDifference+adventureVerticalDifference;
+		int monsterMinSteps = monsterHorizontalDifference+monsterVerticalDifference;
+		if(adventureMinSteps<=monsterMinSteps) {
+		    dungeonGameView.printResult(adventureMinSteps);
+		}
+		else {
+			dungeonGameView.printResult("No possible solution");
+		}
+	}
+	public void addMonsterPosition(int length, int breadth) {
+		positionOfMonster[0]=length;
+		positionOfMonster[1]=breadth;
+		area[length][breadth] = 'M';
 	}
 	
 //	public void printStartingPosition() {
