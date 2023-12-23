@@ -30,17 +30,6 @@ public class DungeonGameView {
 		dungeonGameViewModel.addAdventurerPosition(length, breadth);
 		
 		do {
-			System.out.println("Position of Gold: ");
-			length = getInt()-1;
-			breadth = getInt()-1;
-			validInput = dungeonGameViewModel.isValidInput(length,breadth);
-			if(!validInput) {
-				System.out.println("Enter the position which is inside the Area: ");
-			}
-		}while(!validInput);
-		dungeonGameViewModel.addGoldPosition(length, breadth);
-		
-		do {
 			System.out.println("Position of Monster: ");
 			length = getInt()-1;
 			breadth = getInt()-1;
@@ -50,6 +39,17 @@ public class DungeonGameView {
 			}
 		}while(!validInput);
 		dungeonGameViewModel.addMonsterPosition(length, breadth);
+
+		do {
+			System.out.println("Position of Gold: ");
+			length = getInt()-1;
+			breadth = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			if(!validInput) {
+				System.out.println("Enter the position which is inside the Area: ");
+			}
+		}while(!validInput);
+		dungeonGameViewModel.addGoldPosition(length, breadth);
 		
 		
 		
@@ -73,11 +73,15 @@ public class DungeonGameView {
 	}
 
 	public void printResult(int numberOfSteps) {
-		System.out.println("Minimum number of steps to get the gold is "+numberOfSteps+".");
+		System.out.println("Minimum number of steps: "+numberOfSteps);
 	}
 
 	public void printResult(String result) {
-		System.out.println(result);
+		System.out.print(result);
+	}
+	
+	public void printPath(int row, int col) {
+		System.out.print("("+row+","+col+")");
 	}
 
 //	public void printArea(char[][] area) {

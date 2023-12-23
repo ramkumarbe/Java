@@ -42,10 +42,47 @@ public class DungeonGameViewModel {
 		int adventureMinSteps = adventureHorizontalDifference+adventureVerticalDifference;
 		int monsterMinSteps = monsterHorizontalDifference+monsterVerticalDifference;
 		if(adventureMinSteps<=monsterMinSteps) {
-		    dungeonGameView.printResult(adventureMinSteps);
+			printMinPath(positionOfAdventurer[0]+1,positionOfAdventurer[1]+1,positionOfGold[0]+1,positionOfGold[1]+1);	
 		}
 		else {
 			dungeonGameView.printResult("No possible solution");
+		}
+	}
+	private void printMinPath(int startRow, int startCol, int endRow, int endCol) {
+		if(startCol<=endCol) {
+			while(startCol<=endCol) {
+				dungeonGameView.printPath(startRow,startCol++);
+				if(startCol!=endCol+1) {
+					dungeonGameView.printResult(" -> ");
+				}
+			}
+		}
+		else {
+			while(startCol>=endCol) {
+				dungeonGameView.printPath(startRow,startCol--);
+				if(startCol!=endCol-1) {
+					dungeonGameView.printResult(" -> ");
+				}
+			}
+		}
+		if(startRow!=endRow) {
+			dungeonGameView.printResult(" -> ");
+		}
+		if(startRow<=endRow) {
+			while(startRow<endRow) {
+				dungeonGameView.printPath(++startRow,endCol);
+				if(startRow!=endRow) {
+					dungeonGameView.printResult(" -> ");
+				}
+			}
+		}
+		else {
+			while(startRow>endRow) {
+				dungeonGameView.printPath(--startRow,endCol);
+				if(startRow!=endRow) {
+					dungeonGameView.printResult(" -> ");
+				}
+			}
 		}
 	}
 	public void addMonsterPosition(int length, int breadth) {
