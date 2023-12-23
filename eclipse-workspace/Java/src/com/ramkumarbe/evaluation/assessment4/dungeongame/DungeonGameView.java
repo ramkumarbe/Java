@@ -12,7 +12,7 @@ public class DungeonGameView {
 	
 	public void start() {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Dimensions of the dungeon(Row x Column): ");
+		System.out.println("Dimensions of the dungeon(Row x Column): ");
 		int length = getInt();
 		int breadth = getInt();
 		dungeonGameViewModel.getArea(length,breadth);
@@ -29,17 +29,17 @@ public class DungeonGameView {
 		}while(!validInput);
 		dungeonGameViewModel.addAdventurerPosition(length, breadth);
 		
-//		do {
-//			System.out.println("Position of Monster: ");
-//			length = getInt()-1;
-//			breadth = getInt()-1;
-//			validInput = dungeonGameViewModel.isValidInput(length,breadth);
-//			if(!validInput) {
-//				System.out.println("Enter the position which is inside the Area: ");
-//			}
-//		}while(!validInput);
-//		dungeonGameViewModel.addMonsterPosition(length, breadth);
-//
+		do {
+			System.out.println("Position of Monster: ");
+			length = getInt()-1;
+			breadth = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			if(!validInput) {
+				System.out.println("Enter the position which is inside the Area: ");
+			}
+		}while(!validInput);
+		dungeonGameViewModel.addMonsterPosition(length, breadth);
+
 //		do {
 //			System.out.println("Position of Trigger: ");
 //			length = getInt()-1;
@@ -105,9 +105,9 @@ public class DungeonGameView {
 		System.out.print(result);
 	}
 	
-	public void printPath(int row, int col) {
-		System.out.print("("+row+","+col+")");
-	}
+//	public void printPath(int row, int col) {
+//		System.out.print("("+row+","+col+")");
+//	}
 
 //	public void printArea(char[][] area) {
 //	    System.out.println("+------------------------+");
