@@ -29,56 +29,57 @@ public class DungeonGameView {
 		}while(!validInput);
 		dungeonGameViewModel.addAdventurerPosition(length, breadth);
 		
+		int x,y;
 		do {
 			System.out.println("Position of Monster: ");
-			length = getInt()-1;
-			breadth = getInt()-1;
-			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			x = getInt()-1;
+			y = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(x,y);
 			if(!validInput) {
 				System.out.println("Enter the position which is inside the Area: ");
 			}
 		}while(!validInput);
-		dungeonGameViewModel.addMonsterPosition(length, breadth);
+		dungeonGameViewModel.addMonsterPosition(x, y);
 
-//		do {
-//			System.out.println("Position of Trigger: ");
-//			length = getInt()-1;
-//			breadth = getInt()-1;
-//			validInput = dungeonGameViewModel.isValidInput(length,breadth);
-//			if(!validInput) {
-//				System.out.println("Enter the position which is inside the Area: ");
-//			}
-//		}while(!validInput);
-//		dungeonGameViewModel.addTriggerPosition(length, breadth);
-//		
+		do {
+			System.out.println("Position of Trigger: ");
+			x = getInt()-1;
+			y = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(x,y);
+			if(!validInput) {
+				System.out.println("Enter the position which is inside the Area: ");
+			}
+		}while(!validInput);
+		dungeonGameViewModel.addTriggerPosition(x, y);
+		
 		do {
 			System.out.println("Position of Gold: ");
-			length = getInt()-1;
-			breadth = getInt()-1;
-			validInput = dungeonGameViewModel.isValidInput(length,breadth);
+			x = getInt()-1;
+			y = getInt()-1;
+			validInput = dungeonGameViewModel.isValidInput(x,y);
 			if(!validInput) {
 				System.out.println("Enter the position which is inside the Area: ");
 			}
 		}while(!validInput);
-		dungeonGameViewModel.addGoldPosition(length, breadth);
+		dungeonGameViewModel.addGoldPosition(x, y);
 		
 		System.out.print("Enter the number of Pits: ");
 		int numberOfPits = getInt();
 		for(int i=0; i<numberOfPits; i++) {
 			do {
 				System.out.println("Position of Pit: ");
-				length = getInt()-1;
-				breadth = getInt()-1;
-				validInput = dungeonGameViewModel.isValidInput(length,breadth);
+				x = getInt()-1;
+				y = getInt()-1;
+				validInput = dungeonGameViewModel.isValidInput(x,y);
 				if(!validInput) {
 					System.out.println("Enter the position which is inside the Area: ");
 				}
 			}while(!validInput);
-			dungeonGameViewModel.addPitPosition(length, breadth);
+			dungeonGameViewModel.addPitPosition(x, y);
 		}
 		
 		
-//		dungeonGameViewModel.printStartingPosition();
+		dungeonGameViewModel.printStartingPosition();
 		dungeonGameViewModel.findMinimumSteps();
 	}
     private Scanner sc = new Scanner(System.in);
@@ -109,15 +110,15 @@ public class DungeonGameView {
 //		System.out.print("("+row+","+col+")");
 //	}
 
-//	public void printArea(char[][] area) {
-//	    System.out.println("+------------------------+");
-//	    for (char[] row : area) {
-//	        System.out.print("| ");
-//	        for (char c : row) {
-//	            System.out.print(c + " ");
-//	        }
-//	        System.out.println("|");
-//	    }
-//	    System.out.println("+------------------------+");
-//	}
+	public void printArea(char[][] area) {
+	    System.out.println("+------------------------+");
+	    for (char[] row : area) {
+	        System.out.print("| ");
+	        for (char c : row) {
+	            System.out.print(c + " ");
+	        }
+	        System.out.println("|");
+	    }
+	    System.out.println("+------------------------+");
+	}
 }
