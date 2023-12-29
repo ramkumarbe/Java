@@ -1,0 +1,154 @@
+{
+    "mobileBrands":{
+        "1": "Samsung",
+        "2": "OnePlus",
+        "3": "Vivo",
+        "4": "Oppo",
+        "5": "Xiami"
+      },
+     "Samsung":{
+        "1": "Galaxy S21",
+        "2": "Galaxy S23 FE",
+        "3": "Galaxy Note 20",
+        "4": "Galaxy Z Fold 3"
+     },
+     "OnePlus":{
+        "1": "OnePlus 9",
+        "2": "OnePlus 8T",
+        "3": "OnePlus Nord 2"
+     },
+     "Vivo":{
+        "1": "Vivo X60 Pro",
+        "2": "Vivo V21",
+        "3": "Vivo Y73"
+     },
+     "Oppo":{
+        "1": "Oppo Find X3 Pro",
+        "2": "Oppo Reno 5",
+        "3": "Oppo A74"
+     },
+     "Xiami":{
+        "1": "Redmi Note 10",
+        "2": "Redmi K40",
+        "3": "Redmi 10"
+     },
+  
+    "OnePlus 9": {
+      "Display": "6.55 inches Fluid AMOLED",
+      "Processor": "Snapdragon 888",
+      "RAM": "8GB / 12GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Triple 48 MP"
+    },
+
+    "OnePlus 8T": {
+      "Display": "6.55 inches Fluid AMOLED",
+      "Processor": "Snapdragon 865",
+      "RAM": "8GB / 12GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Quad 48 MP"
+    },
+
+    "OnePlus Nord 2": {
+      "Display": "6.43 inches Fluid AMOLED",
+      "Processor": "MediaTek Dimensity 1200",
+      "RAM": "6GB / 8GB / 12GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Triple 50 MP"
+    },
+
+    "Vivo X60 Pro": {
+      "Display": "6.56 inches AMOLED",
+      "Processor": "Exynos 1080",
+      "RAM": "8GB / 12GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Quad 48 MP"
+  },
+    "Vivo V21": {
+      "Display": "6.44 inches AMOLED",
+      "Processor": "MediaTek Dimensity 800U",
+      "RAM": "8GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Triple 64 MP"
+    },
+
+    "Vivo Y73": {
+      "Display": "6.44 inches AMOLED",
+      "Processor": "MediaTek Helio G95",
+      "RAM": "8GB",
+      "Storage": "128GB",
+      "Camera": "Triple 64 MP"
+    },
+
+    "Oppo Find X3 Pro": {
+      "Display": "6.7 inches LTPO AMOLED",
+      "Processor": "Snapdragon 888",
+      "RAM": "8GB / 12GB",
+      "Storage": "256GB",
+      "Camera": "Quad 50 MP"
+    },
+    
+    "Oppo Reno 5": {
+      "Display": "6.43 inches AMOLED",
+      "Processor": "MediaTek Dimensity 1000+",
+      "RAM": "8GB / 12GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Quad 64 MP"
+    },
+    "Oppo A74": {
+      "Display": "6.43 inches AMOLED",
+      "Processor": "Snapdragon 662",
+      "RAM": "6GB / 8GB",
+      "Storage": "128GB",
+      "Camera": "Quad 48 MP"
+    },
+    "Redmi Note 10": {
+      "Display": "6.43 inches Super AMOLED",
+      "Processor": "Snapdragon 678",
+      "RAM": "4GB / 6GB",
+      "Storage": "64GB / 128GB",
+      "Camera": "Quad 48 MP"
+    },
+    "Redmi K40": {
+      "Display": "6.67 inches Super AMOLED",
+      "Processor": "Snapdragon 870",
+      "RAM": "6GB / 8GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Triple 48 MP"
+    },
+  
+    "Redmi 10": {
+      "Display": "6.5 inches IPS LCD",
+      "Processor": "MediaTek Helio G88",
+      "RAM": "4GB / 6GB",
+      "Storage": "64GB / 128GB",
+      "Camera": "Quad 50 MP"
+    },
+    "Galaxy S21": {
+      "Display": "6.2 inches Dynamic AMOLED",
+      "Processor": "Exynos 2100 / Snapdragon 888",
+      "RAM": "8GB",
+      "Storage": "128GB / 256GB",
+      "Camera": "Triple 12 MP"
+    },
+    "Galaxy S23 FE": {
+      "Display": "6.4 inches Dynamic AMOLED 2X",
+      "Processor": "Exynos 2200",
+      "RAM": "8GB",
+      "Storage": "256GB",
+      "Camera": "50.0 MP + 12.0 MP + 8.0 MP"
+    },
+    "Galaxy Note 20": {
+      "Display": "6.7 inches Super AMOLED Plus",
+      "Processor": "Exynos 990 / Snapdragon 865+",
+      "RAM": "8GB / 12GB",
+      "Storage": "256GB / 512GB",
+      "Camera": "Triple 64 MP"
+    },
+    "Galaxy Z Fold 3": {
+      "Display": "7.6 inches Dynamic AMOLED 2X",
+      "Processor": "Snapdragon 888",
+      "RAM": "12GB",
+      "Storage": "256GB / 512GB"
+  }
+  }
