@@ -8,8 +8,10 @@ public class AddRoleViewModel {
 	public AddRoleViewModel(AddRole view) {
 		this.view = view;
 	}
-	public void addRole(Role role) {
-//		RoleHierarchy.getInstance().addRole(role);
+	public void addRoleLister(Role role) {
+		RoleHierarchy.getInstance().addRole(role);
+	}
+	public void displayRolesListener() {
 		view.printRoles(RoleHierarchy.getInstance().getRolesList());
 	}
 }

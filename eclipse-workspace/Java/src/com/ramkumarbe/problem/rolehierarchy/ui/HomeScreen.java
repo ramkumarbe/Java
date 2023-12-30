@@ -19,6 +19,9 @@ public class HomeScreen {
 			case 1 -> {
 				addRole.addSubRole();
 			}
+			case 2 -> {
+				addRole.displayRoles();
+			}
 			case 0 -> {
 				System.out.println("Exiting..");
 				System.exit(0);
@@ -28,11 +31,13 @@ public class HomeScreen {
 			}
 			}
 			System.out.println();
-		} while (++n < 2);
+		} while (true);
 	}
 
 	private void printMenu() {
 		System.out.println("Operations");
 		System.out.println("1.Add Sub Role");
+		System.out.println("2.Display Roles");
+		System.out.println("0.Exit");
 	}
 }

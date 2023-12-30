@@ -17,6 +17,7 @@ public class AddRole {
 		System.out.print("Enter root role name: ");
 		String rootName = sc.next();
 		Role role = new Role(rootName);
+		viewModel.addRoleLister(role);
 	}
 
 	public void addSubRole() {
@@ -26,13 +27,18 @@ public class AddRole {
 		System.out.print("Enter reporting to role name: ");
 		String reportingRole = sc.nextLine();
 		Role role = new Role(subRole,reportingRole);
-		System.out.println(role.getRoleName());
-		viewModel.addRole(role);
+		viewModel.addRoleLister(role);
 	}
 
 	public void printRoles(List<Role> rolesList) {
+		System.out.println("Roles: ");
+		int i=1;
 		for(Role role:rolesList) {
-			System.out.println(role.getRoleName());
+			System.out.println(i++ + role.getRoleName());
 		}
+	}
+
+	public void displayRoles() {
+		viewModel.displayRolesListener();
 	}
 }
