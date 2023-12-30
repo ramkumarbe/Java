@@ -5,7 +5,7 @@ import com.ramkumarbe.problem.rolehierarchy.ui.HomeScreen;
 public class Main {
 
 	public static void main(String[] args) {
-		new HomeScreen().menu();
+		new HomeScreen().start();
 	}
 
 }

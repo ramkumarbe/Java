@@ -16,7 +16,16 @@ public class AddRole {
 		System.out.print("Enter root role name: ");
 		String rootName = sc.next();
 		Role role = new Role(rootName);
-		viewModel.addRole(role);
+	}
+
+	public void addSubRole() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter sub role name: ");
+		String subRole = sc.nextLine();
+		System.out.print("Enter reporting to role name: ");
+		String reportingRole = sc.nextLine();
+		Role role = new Role(subRole,reportingRole);
 		System.out.println(role.getRoleName());
+		viewModel.addRole(role);
 	}
 }

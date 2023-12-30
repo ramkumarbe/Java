@@ -37,7 +37,7 @@ public class RoleHierarchy {
 	}
 	private static void addRole(Connection connection, Role role) throws SQLException {
 		PreparedStatement preparedStatement 
-		     = connection.prepareStatement("insert into table_role (role_name) values('"+role.getRoleName()+"')");
+		     = connection.prepareStatement("insert into table_role (role_name,reporting_role) values('"+role.getRoleName()+"','"+role.getReportingRole()+"')");
 		preparedStatement.execute();
 	}
 //	public Role getRole() {
