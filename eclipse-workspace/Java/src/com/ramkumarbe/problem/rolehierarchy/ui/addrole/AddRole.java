@@ -1,5 +1,6 @@
 package com.ramkumarbe.problem.rolehierarchy.ui.addrole;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.ramkumarbe.problem.rolehierarchy.dto.Role;
@@ -27,5 +28,11 @@ public class AddRole {
 		Role role = new Role(subRole,reportingRole);
 		System.out.println(role.getRoleName());
 		viewModel.addRole(role);
+	}
+
+	public void printRoles(List<Role> rolesList) {
+		for(Role role:rolesList) {
+			System.out.println(role.getRoleName());
+		}
 	}
 }

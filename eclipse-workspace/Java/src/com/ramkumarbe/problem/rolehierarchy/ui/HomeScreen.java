@@ -10,7 +10,7 @@ public class HomeScreen {
 		Scanner sc = new Scanner(System.in);
 		AddRole addRole = new AddRole();
 //	    addRole.addRole();
-		int n = 2;
+		int n = 0;
 		do {
 			printMenu();
 			System.out.print("Operation to be performed:");
@@ -28,7 +28,7 @@ public class HomeScreen {
 			}
 			}
 			System.out.println();
-		} while (n-- > 0);
+		} while (++n < 2);
 	}
 
 	private void printMenu() {
