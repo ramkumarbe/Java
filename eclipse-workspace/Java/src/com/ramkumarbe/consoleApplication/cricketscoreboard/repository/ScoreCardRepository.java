@@ -19,7 +19,6 @@ public class ScoreCardRepository {
 	private Player[] australianPlayers = australia.getPlayers();
 	
 	public void load() {
-		
 		indianPlayers[0] = new Player("Rohit Sharma", Role.BATSMAN);
 		indianPlayers[1] = new Player("Subhman Gill", Role.BATSMAN);
 		indianPlayers[2] = new Player("Virat Kohli", Role.BATSMAN);

@@ -15,12 +15,13 @@ public class ScoreCardManagerViewModel {
 	private ScoreCardManager view;
 	ScoreCardManagerViewModel(ScoreCardManager scoreCardManager) {
 		view = scoreCardManager;
+		ScoreCardRepository.getInstance().load();
 	}
 	
 	private Innings indBat, ausBat, currentInnings;
 	private Player[] batsmen, bowlers;
+	int projectedScore, target;
 	public void setInnings(int n) {
-		ScoreCardRepository.getInstance().load();
 		Team india = ScoreCardRepository.getInstance().getIndia();
 		Team australia = ScoreCardRepository.getInstance().getAustralia();
         Innings indBat = new Innings(india,australia);
@@ -44,6 +45,7 @@ public class ScoreCardManagerViewModel {
 	public void setNextInnings() {
 		if(currentInnings.getBattingTeam().getName().equals("India")) {
 			currentInnings = ausBat;
+			isFirstInnings = false;
 		}
 		else {
 			currentInnings = indBat;
@@ -56,6 +58,7 @@ public class ScoreCardManagerViewModel {
 	private Player striker, nonStriker;
 	private int numberOfOvers;
 	private Over currentOver;
+    private boolean isFirstInnings;
 	public void startOver() {
 		selectPlayers();
 		int ballCount=0;
@@ -95,14 +98,21 @@ public class ScoreCardManagerViewModel {
 			if(isValidInput) {
 			}
 		}while(ballCount<6);
+		updateTarget();
 		rotateStrike();
 		switchOver();
+	}
+	private void updateTarget() {
+		if(isFirstInnings) {
+			projectedScore = currentInnings.getBattingTeam().getRunRate()*totalOvers;
+		}
 	}
 	private void updateExtras() {
 		currentBowler.setConceededRuns(currentBowler.getConceededRuns()+1);
 		currentBowler.setEconomy(currentBowler.getConceededRuns()/((float)currentBowler.getBallsBowled()/6));
 		currentInnings.getBattingTeam().setScore(currentInnings.getBattingTeam().getScore()+1);
 		currentInnings.getBattingTeam().setExtras(currentInnings.getBattingTeam().getExtras()+1);
+		currentInnings.getBattingTeam().setRunRate(currentInnings.getBattingTeam().getScore()/numberOfOvers);
 	}
 	private void rotateStrike() {
 		Player temp = striker;

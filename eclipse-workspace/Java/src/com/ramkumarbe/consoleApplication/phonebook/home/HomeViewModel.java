@@ -1,5 +1,6 @@
 package com.ramkumarbe.consoleApplication.phonebook.home;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,16 +14,19 @@ public class HomeViewModel {
 
 	public HomeViewModel(Home home) {
 		this.home = home;
+		loadContacts();
 	}
 
-	public void showContacts() {
-		List<Contact> contacts = new ArrayList<>();
-		if(contacts.isEmpty()) {
-			home.printMessage("There is no records.");
+	private void loadContacts() {
+		try {
+			ContactRepository.getInstance().loadContacts();
+		} catch (IOException e) {
+			home.printMessage("Cannot get contactsList.");
 		}
-		for(Contact contact:contacts) {
-			home.printContact(contact);
-		}
+	}
+	
+	public Set<Contact> getContacts() {
+		return ContactRepository.getInstance().getContacts();
 	}
 
 	public void searchContact(String input) {
@@ -61,4 +65,11 @@ public class HomeViewModel {
 		}
 	}
 
+	public void finalize() {
+		try {
+			ContactRepository.getInstance().writeContactListToJsonFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

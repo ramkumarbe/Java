@@ -6,6 +6,7 @@ public class Team {
 	private int wickets;
 	private int target;
 	private int extras;
+	private int runRate;
 	private Player[] players = new Player[11];
 	public Team(String name) {
 		this.name = name;
@@ -42,5 +43,11 @@ public class Team {
 	}
 	public void setExtras(int extras) {
 		this.extras = extras;
+	}
+	public int getRunRate() {
+		return runRate;
+	}
+	public void setRunRate(int runRate) {
+		this.runRate = runRate;
 	}
 }
