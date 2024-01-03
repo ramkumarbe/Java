@@ -205,4 +205,38 @@ public class MovieRepository {
 		}
 		return tickets;
 	}
+
+	public Map<Integer, String> getGenres() throws SQLException {
+		Map<Integer, String> genres = new HashMap<>();
+		String query = "Select * from genres";
+		ResultSet resultSet = getStatement().executeQuery(query);
+		while(resultSet.next()) {
+			int id = resultSet.getInt("genre_id");
+			String genre = resultSet.getString("genre");
+			genres.put(id, genre);
+		}
+		return genres;
+	}
+
+	public void uploadNewShow(Show show) throws SQLException {
+		String query = "Insert Into movie_show_schedule (show_datetime,movie_title)"
+			     + "Values (?,?)";
+		PreparedStatement statement = getConnection().prepareStatement(query);
+		Timestamp timeStamp = Timestamp.valueOf(show.getDateTime());
+		statement.setTimestamp(1, timeStamp);
+		statement.setString(2, show.getMovie().getTitle());
+		int n = statement.executeUpdate();
+		System.out.println(n);
+	}
+
+	public void uploadNewMovie(Movie movie) throws SQLException {
+		String query = "Insert Into movie (title,director,genre,price)"
+				     + "Values (?,?,?,?)";
+		PreparedStatement statement = getConnection().prepareStatement(query);
+		statement.setString(1, movie.getTitle());
+		statement.setString(2, movie.getDirector());
+		statement.setString(3, String.join(",",movie.getGenre()));
+		statement.setInt(4, movie.getPrice());
+		statement.executeUpdate();
+	}
 }

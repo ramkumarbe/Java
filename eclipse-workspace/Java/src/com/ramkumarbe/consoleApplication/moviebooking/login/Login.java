@@ -17,7 +17,7 @@ public class Login {
 		do {
 			System.out.println("1.Login");
 			System.out.println("2.Signup");
-//			System.out.println("0.Exit");
+			System.out.println("0.Exit");
 			System.out.print("Enter your choice: ");
 			choice = Util.getInstance().getInt();
 			switch (choice) {
@@ -26,6 +26,10 @@ public class Login {
 			}
 			case 2 -> {
 				user = signup();
+			}
+			case 3 -> {
+				System.out.println("Exiting..");
+				System.exit(0);
 			}
 			default -> {
 				System.out.println("Enter valid input.");
@@ -42,7 +46,6 @@ public class Login {
 	public User login() {
 		User user;
 		do {
-
 			System.out.print("Enter the UserName: ");
 			String userName = Util.getInstance().getString();
 
@@ -54,8 +57,7 @@ public class Login {
 	        	System.out.println("Invalid username or password.");
 	        }
 		} while (user==null);
-
-		Util.getInstance().endLine();
+		System.out.println();
 		return user;
 	}
 }

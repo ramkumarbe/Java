@@ -12,10 +12,6 @@ public class Util {
 		return obj;
 	}
 	
-	public void endLine() {
-		System.out.println("\n-----------------------------------------------------------------\n");
-	}
-
 	Scanner sc = new Scanner(System.in);
 	
 	public int getInt() {

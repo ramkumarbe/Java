@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.ramkumarbe.consoleApplication.moviebooking.admin.AdminPanel;
 import com.ramkumarbe.consoleApplication.moviebooking.dto.Movie;
 import com.ramkumarbe.consoleApplication.moviebooking.dto.Show;
 import com.ramkumarbe.consoleApplication.moviebooking.dto.Ticket;
@@ -21,14 +22,21 @@ public class TicketCounter {
 	}
 
 	public void start() {
+		System.out.println("\t\t\t--------------------------------------");
+		System.out.println("\t\t\t\tMovie Ticekt Booking");
+		System.out.println("\t\t\t--------------------------------------");
 		Login login = new Login();
 		currentUser = login.getUser();
+		if(currentUser.getUserName().equals("admin")) {
+			new AdminPanel().adminHome();
+			return;
+		}
 		int choice;
 		do {
 			menu();
 			System.out.print("Enter your choice: ");
 			choice = Util.getInstance().getInt();
-			Util.getInstance().endLine();
+			System.out.println();
 
 			switch (choice) {
 				case 1 -> {
@@ -41,11 +49,11 @@ public class TicketCounter {
 							bookTicket(selectedmovie);
 						}
 					}
-					Util.getInstance().endLine();
+					System.out.println();
 				}
 				case 2 -> {
 					viewBookedTickets();
-					Util.getInstance().endLine();
+					System.out.println();
 				}
 				case 3 -> {
 					currentUser = login.getUser();
@@ -205,7 +213,7 @@ public class TicketCounter {
         Show show = ticket.getShow();
 
         System.out.println("Movie: " + show.getMovie().getTitle());
-        System.out.println("Show Date and Time: " + show.getDateTime());
+        System.out.println("Show Date and Time: " + show.getDateTime().toLocalDate()+" "+show.getDateTime().toLocalTime());
         System.out.println("Seats: " + ticket.getSeats());
         System.out.println("-------------------------------");
     }
