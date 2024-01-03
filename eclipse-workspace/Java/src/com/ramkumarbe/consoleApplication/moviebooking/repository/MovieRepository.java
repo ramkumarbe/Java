@@ -23,8 +23,9 @@ import com.ramkumarbe.consoleApplication.moviebooking.dto.User;
 public class MovieRepository {
 	private static MovieRepository repository = null;
 
-	private MovieRepository() {
-	}
+	private List<Movie> moviesList = new ArrayList<>();
+
+	private MovieRepository() {}
 
 	public static MovieRepository getInstance() {
 		if (repository == null) {
@@ -32,18 +33,6 @@ public class MovieRepository {
 
 		}
 		return repository;
-	}
-
-	public void addUser(User user) throws SQLException {
-		String query = "INSERT INTO user (username, password, mobile_number, email) VALUES (?, ?, ?, ?)";
-		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-
-		preparedStatement.setString(1, user.getUserName());
-		preparedStatement.setString(2, user.getPassword());
-		preparedStatement.setFloat(3, Long.parseLong(user.getPhoneNumber()));
-		preparedStatement.setString(4, user.getMail());
-
-		preparedStatement.executeUpdate();
 	}
 
 	private Connection getConnection() throws SQLException {
@@ -61,6 +50,18 @@ public class MovieRepository {
 
 	public void loadMovies() throws SQLException {
 		getMovies(getStatement(), "SELECT * FROM movie");
+	}
+
+	public void addUser(User user) throws SQLException {
+		String query = "INSERT INTO user (username, password, mobile_number, email) VALUES (?, ?, ?, ?)";
+		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+
+		preparedStatement.setString(1, user.getUserName());
+		preparedStatement.setString(2, user.getPassword());
+		preparedStatement.setFloat(3, Long.parseLong(user.getPhoneNumber()));
+		preparedStatement.setString(4, user.getMail());
+
+		preparedStatement.executeUpdate();
 	}
 
 	private void getMovies(Statement statement, String query) throws SQLException {
@@ -100,12 +101,6 @@ public class MovieRepository {
 			usersList.put(user.getUserName(), user);
 		}
 		return usersList;
-	}
-
-	private List<Movie> moviesList = new ArrayList<>();
-
-	public List<Movie> getAvailableMovies() {
-		return moviesList;
 	}
 
 	public List<Show> getShowsList(Movie selectedMovie) throws SQLException {
@@ -239,4 +234,9 @@ public class MovieRepository {
 		statement.setInt(4, movie.getPrice());
 		statement.executeUpdate();
 	}
+
+	public List<Movie> getAvailableMovies() {
+		return moviesList;
+	}
+
 }
