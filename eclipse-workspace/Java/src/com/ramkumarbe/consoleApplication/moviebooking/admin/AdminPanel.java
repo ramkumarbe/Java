@@ -47,8 +47,8 @@ public class AdminPanel {
 	    System.out.println("+" + repeatChar('-', menuWidth - 2) + "+");
 	    System.out.println("| " + centerText("1. Add movie", menuWidth - 4) + " |");
 	    System.out.println("| " + centerText("2. Add show", menuWidth - 4) + " |");
-	    System.out.println("| " + centerText("3. Logout", menuWidth - 4) + " |");
-	    System.out.println("| " + centerText("4. Exit", menuWidth - 4) + " |");
+	    System.out.println("|" + centerText("3. Logout", menuWidth - 4) + " |");
+	    System.out.println("|" + centerText("4. Exit", menuWidth - 4) + " |");
 	    System.out.println("+" + repeatChar('-', menuWidth - 2) + "+");
 	}
 
