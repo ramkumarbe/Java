@@ -30,7 +30,7 @@ public class TicketCounterViewModel {
 		}
     }
     
-	public void getViewBookedTickets(User user) {
+	public void viewBookedTickets(User user) {
 		List<Ticket> bookedTickets = new ArrayList<Ticket>();
 		try {
 			bookedTickets = MovieRepository.getInstance().getBookedTickets(user);
@@ -58,7 +58,6 @@ public class TicketCounterViewModel {
 	public Ticket bookTicket(User currentUser, Show selectedShow, List<Integer> seats) {
 		BookTicket bookTicket = new BookTicket();
 		Ticket ticket = bookTicket.bookTicket(currentUser, selectedShow, seats);
-		ticket.getSeats().addAll(seats);
 		return ticket;
 	}
 	

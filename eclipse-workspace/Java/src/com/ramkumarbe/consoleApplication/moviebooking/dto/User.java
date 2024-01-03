@@ -1,8 +1,5 @@
 package com.ramkumarbe.consoleApplication.moviebooking.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 	
 	public User(String userName, String password, String phoneNumber, String mail) {

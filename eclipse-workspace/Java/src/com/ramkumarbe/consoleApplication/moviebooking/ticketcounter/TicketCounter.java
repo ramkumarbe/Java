@@ -90,30 +90,31 @@ public class TicketCounter {
 	}
 
 	private void printSeats(String[] seats) {
-        int numRows = 5; 
-        int seatsPerRow = 10;  
+	    int numRows = 5;
+	    int seatsPerRow = 10;
 
-        System.out.println("+" + repeatChar('-', seatsPerRow * 4 + 1) + "+");
+	    System.out.println("+" + repeatChar('-', seatsPerRow * 6 + 1) + "+");
 
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < seatsPerRow; j++) {
-                int seatIndex = i * seatsPerRow + j;
-                if (seatIndex < seats.length) {
-                    String seat = seats[seatIndex];
-                    System.out.printf("| %-3s ", seat);
-                } else {
-                    System.out.print("|     ");  
-                }
-            }
-            System.out.println("|");
-            System.out.println("+" + repeatChar('-', seatsPerRow * 4 + 1) + "+");
-        }
-        System.out.println("0.Back");
-    }
+	    for (int i = 0; i < numRows; i++) {
+	        for (int j = 0; j < seatsPerRow; j++) {
+	            int seatIndex = i * seatsPerRow + j;
+	            if (seatIndex < seats.length) {
+	                String seat = seats[seatIndex];
+	                System.out.printf("| %-5s ", seat);
+	            } else {
+	                System.out.print("|      ");
+	            }
+	        }
+	        System.out.println("|");
+	        System.out.println("+" + repeatChar('-', seatsPerRow * 6 + 1) + "+");
+	    }
+	    System.out.println("0. Back");
+	}
 
-    private String repeatChar(char ch, int count) {
-        return new String(new char[count]).replace('\0', ch);
-    }
+	private String repeatChar(char ch, int count) {
+	    return new String(new char[count]).replace('\0', ch);
+	}
+
 
 	private Show selectShow(Movie selectedmovie) {
 		List<Show> shows = viewModel.getShowsList(selectedmovie);
@@ -123,14 +124,14 @@ public class TicketCounter {
 	}
 
 	private void printShows(List<Show> shows) {
-	    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
 	    System.out.println("+" + repeatCharacter('-', 60) + "+");
 	    System.out.printf("| %-20s | %-20s | %-5s |\n", "Show Date and Time", "Movie Title", "Price");
 	    System.out.println("+" + repeatCharacter('-', 60) + "+");
-
+        int i = 1;
 	    for (Show show : shows) {
 	        System.out.printf("| %-20s | %-20s | %-5d |\n",
-	                show.getDateTime().format(DATE_TIME_FORMATTER),
+	               i++ + ". " + show.getDateTime().format(DATE_TIME_FORMATTER),
 	                show.getMovie().getTitle(),
 	                show.getMovie().getPrice());
 	    }
@@ -158,7 +159,7 @@ public class TicketCounter {
 	}
 
 	private void viewBookedTickets() {
-		viewModel.getViewBookedTickets(currentUser);
+		viewModel.viewBookedTickets(currentUser);
 	}
 	
 	public void showMessage(String message) {
@@ -179,16 +180,16 @@ public class TicketCounter {
 	}
 
 	private void printMoviesList(List<Movie> availableMovies) {
-        System.out.println("┌────────────────────────── Available Movies ────────────────────────────────────────────┐");
-        System.out.printf("| %-4s | %-25s | %-20s | %-40s |\n", "No.", "Title", "Director", "Genre");
-        System.out.println("|─────┼─────────────────────────────────────────────┼──────────────────────┼────────────|");
+        System.out.println("┌──────────────────────────── Available Movies ────────────────────────────────────────────┐");
+        System.out.printf( "|%-4s | %-25s | %-20s | %-40s |\n", "No.", "Title", "Director", "Genre");
+        System.out.println("|─────┼───────────────────────────────────────────────┼──────────────────────┼────────────|");
 
         for (int i = 0; i < availableMovies.size(); i++) {
             Movie movie = availableMovies.get(i);
             System.out.printf("| %-3d | %-25s | %-20s | %-40s |\n", (i + 1), movie.getTitle(), movie.getDirector(), movie.getGenre());
         }
 
-        System.out.println("└───────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println("└─────────────────────────────────────────────────────────────────────────────────────────┘");
         System.out.println("0. Back");
     }
 

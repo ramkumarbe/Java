@@ -1,5 +1,6 @@
 package com.ramkumarbe.consoleApplication.moviebooking.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ticket {
@@ -10,6 +11,7 @@ public class Ticket {
 	public Ticket(Show show, User user) {
 		this.show = show;
 		this.user = user;
+		seats = new ArrayList<>();
 	}
 	
 	public Show getShow() {

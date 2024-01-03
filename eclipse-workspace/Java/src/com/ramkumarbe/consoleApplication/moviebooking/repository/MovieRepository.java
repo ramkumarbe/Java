@@ -29,7 +29,7 @@ public class MovieRepository {
 	public static MovieRepository getInstance() {
 		if (repository == null) {
 			repository = new MovieRepository();
-			
+
 		}
 		return repository;
 	}
@@ -80,7 +80,7 @@ public class MovieRepository {
 		return new Movie(title, director, genre, price);
 	}
 
-	public Map<String,User> getUsers() throws SQLException {
+	public Map<String, User> getUsers() throws SQLException {
 		return getUsers(getStatement(), "SELECT * FROM user");
 	}
 
@@ -92,9 +92,9 @@ public class MovieRepository {
 		return new User(userName, pass, mailId, phoneNumber);
 	}
 
-	private Map<String,User> getUsers(Statement statement, String query) throws SQLException {
+	private Map<String, User> getUsers(Statement statement, String query) throws SQLException {
 		ResultSet resultSet = statement.executeQuery(query);
-		Map<String,User> usersList = new HashMap<>();
+		Map<String, User> usersList = new HashMap<>();
 		while (resultSet.next()) {
 			User user = getUser(resultSet);
 			usersList.put(user.getUserName(), user);
@@ -112,11 +112,18 @@ public class MovieRepository {
 		List<Show> showsList = new ArrayList<>();
 		String query = "SELECT s.show_datetime," + "m.title AS movie_title,  m.director,  m.genre,  m.price "
 				+ "FROM  movie_show_schedule s " + "JOIN  movie m ON s.movie_title = m.title " + "where movie_title = "
-				+ "'" + "naruto" + "'";
+				+ "'" + selectedMovie.getTitle() + "'";
 		ResultSet resultSet = getStatement().executeQuery(query);
 		while (resultSet.next()) {
 			LocalDateTime dateTime = getDateTime(resultSet);
-			Movie movie = getMovie(resultSet);
+
+			String title = resultSet.getString("movie_title");
+			String director = resultSet.getString("director");
+			List<String> genre = Arrays.asList(resultSet.getString("genre").split(","));
+			int price = resultSet.getInt("price");
+
+			Movie movie = new Movie(title, director, genre, price);
+			;
 			Show show = new Show(dateTime, movie);
 			showsList.add(show);
 		}
@@ -134,8 +141,9 @@ public class MovieRepository {
 		for (int i = 1; i <= 50; i++) {
 			seats[i - 1] = String.valueOf(i);
 		}
-		String query = "SELECT seat_number FROM seats " + "JOIN shows ON seats.show_id = shows.show_id "
-				+ "WHERE shows.show_datetime = ?";
+		String query = "SELECT seat_number FROM ticket "
+				+ "JOIN movie_show_schedule ON ticket.show_id = movie_show_schedule.show_id "
+				+ "WHERE movie_show_schedule.show_datetime = ?";
 
 		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
 		preparedStatement.setObject(1, selectedShow.getDateTime());
@@ -153,45 +161,48 @@ public class MovieRepository {
 		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
 		List<Integer> seats = ticket.getSeats();
 		User user = ticket.getUser();
-
+		System.out.println(seats);
 		for (int seatNumber : seats) {
 			preparedStatement.setInt(1, showId);
 			preparedStatement.setInt(2, seatNumber);
 			preparedStatement.setString(3, user.getUserName());
-			preparedStatement.addBatch();
+			preparedStatement.executeUpdate();
 		}
 	}
 
 	private int getShowId(Ticket ticket) throws SQLException {
-		int showId = -1; 
+		int showId = -1;
 
-        String query = "SELECT show_id FROM show WHERE show_datetime = ?";
+		String query = "SELECT show_id FROM movie_show_schedule WHERE show_datetime = ?";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setTimestamp(1, Timestamp.valueOf(ticket.getShow().getDateTime()));
+		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		preparedStatement.setTimestamp(1, Timestamp.valueOf(ticket.getShow().getDateTime()));
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    showId = resultSet.getInt("show_id");
-                }
+		ResultSet resultSet = preparedStatement.executeQuery();
+		if (resultSet.next()) {
+			showId = resultSet.getInt("show_id");
+		}
 
-        return showId;
+		return showId;
 	}
 
 	public List<Ticket> getBookedTickets(User user) throws SQLException {
 
 		List<Ticket> tickets = new ArrayList<>();
-		String query = "SELECT m.title,m.director,m.genre,m.price,s.show_datetime,t.seat_number FROM movie_ticket_booking.ticket as t "+
-				"join movie_show_schedule as s on t.show_id = s.show_id "+
-				"join movie as m on s.movie_title = m.title "+
-				"where t.username = '"+user.getUserName()+"'";
+		String query = "SELECT m.title,m.director,m.genre,m.price,s.show_datetime,t.seat_number FROM movie_ticket_booking.ticket as t "
+				+ "join movie_show_schedule as s on t.show_id = s.show_id "
+				+ "join movie as m on s.movie_title = m.title " + "where t.username = '" + user.getUserName() + "'";
 		ResultSet resultSet = getStatement().executeQuery(query);
 		while (resultSet.next()) {
 			LocalDateTime dateTime = getDateTime(resultSet);
 			Movie movie = getMovie(resultSet);
+			int seat = resultSet.getInt("seat_number");
 			Show show = new Show(dateTime, movie);
-			tickets.add(new Ticket(show, user));
+			Ticket ticket = new Ticket(show, user);
+			ticket.getSeats().add(seat);
+			
+			tickets.add(ticket);
 		}
-		return null;
+		return tickets;
 	}
 }

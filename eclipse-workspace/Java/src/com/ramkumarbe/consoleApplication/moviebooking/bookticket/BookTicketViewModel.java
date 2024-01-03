@@ -19,6 +19,7 @@ public class BookTicketViewModel {
 	public Ticket bookTicket(User user, Show show, List<Integer> seats) {
 		bookTicket.payment(show.getMovie().getPrice() * seats.size());
 		Ticket ticket = new Ticket(show, user);
+		ticket.getSeats().addAll(seats);
 	    try {
 			MovieRepository.getInstance().insertBookedTickets(ticket);
 		} catch (SQLException e) {
