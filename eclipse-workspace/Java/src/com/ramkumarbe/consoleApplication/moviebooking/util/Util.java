@@ -24,16 +24,7 @@ public class Util {
 			sc.nextLine();
 		}
 	}
-	public long getLong() {
-		while(true) {
-			if(sc.hasNextLong()) {
-				long n = sc.nextLong(); sc.nextLine();
-				return n;
-			}
-			System.out.println("Enter valid Number.");
-			sc.nextLine();
-		}
-	}
+	
 	public String getString() {
 		return sc.nextLine();
 	}

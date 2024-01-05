@@ -20,37 +20,33 @@ public class TicketCounter {
 	public TicketCounter() {
 		viewModel = new TicketCounterViewModel(this);
 	}
+	private static final String LINE_SEPARATOR = "+----------------------------------------+";
 
 	public void start() {
-		System.out.println("\t\t\t--------------------------------------");
-		System.out.println("\t\t\t\tMovie Ticekt Booking");
-		System.out.println("\t\t\t--------------------------------------");
+		System.out.println("\t\t\t"+LINE_SEPARATOR);
+        System.out.println("\t\t\t\tMovie Ticket Booking");
+        System.out.println("\t\t\t"+LINE_SEPARATOR);
 		Login login = new Login();
 		currentUser = login.getUser();
 		if(currentUser.getUserName().equals("admin")) {
 			new AdminPanel().adminHome();
 			return;
 		}
-		int choice;
+		int selectedOption;
 		do {
-			menu();
+			displayMenu();
 			System.out.print("Enter your choice: ");
-			choice = Util.getInstance().getInt();
+			selectedOption = Util.getInstance().getInt();
 			System.out.println();
 
-			switch (choice) {
-				case 1 -> {
-					Movie selectedmovie = selectMovie();
-					if(selectedmovie != null) {
-						System.out.println("1.Book Ticket");
-						System.out.println("0.Back");
-						int enteredChoice = Util.getInstance().getInt();
-						if(enteredChoice==1) {
-							bookTicket(selectedmovie);
-						}
-					}
-					System.out.println();
-				}
+			switch (selectedOption) {
+			 case 1 -> {
+                 Movie selectedMovie = selectMovie();
+                 if (selectedMovie != null) {
+                      bookTicket(selectedMovie);
+                 }
+                 System.out.println();
+             }
 				case 2 -> {
 					viewBookedTickets();
 					System.out.println();
@@ -65,11 +61,11 @@ public class TicketCounter {
 					System.out.println("Invalid choice. Please try again.");
 				}
 			}
-			if(choice!=0) {
-				System.out.println("Enter to continue.");
-				Util.getInstance().getString();
-			}
-		} while (choice != 0);
+			 if (selectedOption != 0) {
+	                System.out.println("Press Enter to continue.");
+	                Util.getInstance().getString();
+	            }
+		} while (selectedOption != 0);
 	}
 
 	private boolean bookTicket(Movie selectedmovie) {
@@ -100,21 +96,25 @@ public class TicketCounter {
 	private void printSeats(String[] seats) {
 	    int numRows = 5;
 	    int seatsPerRow = 10;
+	    int spacesBetween = 3; // Number of spaces between the first and last 5 seats
 
-	    System.out.println("+" + repeatChar('-', seatsPerRow * 6 + 1) + "+");
+	    System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 1) + "+");
 
 	    for (int i = 0; i < numRows; i++) {
 	        for (int j = 0; j < seatsPerRow; j++) {
 	            int seatIndex = i * seatsPerRow + j;
 	            if (seatIndex < seats.length) {
 	                String seat = seats[seatIndex];
+	                if (j == 5) {
+	                    System.out.print(repeatChar(' ', spacesBetween)); // Add spaces between the first and last 5 seats
+	                }
 	                System.out.printf("| %-5s ", seat);
 	            } else {
 	                System.out.print("|      ");
 	            }
 	        }
 	        System.out.println("|");
-	        System.out.println("+" + repeatChar('-', seatsPerRow * 6 + 1) + "+");
+	        System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 1) + "+");
 	    }
 	    System.out.println("0. Back");
 	}
@@ -122,6 +122,7 @@ public class TicketCounter {
 	private String repeatChar(char ch, int count) {
 	    return new String(new char[count]).replace('\0', ch);
 	}
+
 
 
 	private Show selectShow(Movie selectedmovie) {
@@ -132,19 +133,21 @@ public class TicketCounter {
 	}
 
 	private void printShows(List<Show> shows) {
-	    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
-	    System.out.println("+" + repeatCharacter('-', 60) + "+");
-	    System.out.printf("| %-20s | %-20s | %-5s |\n", "Show Date and Time", "Movie Title", "Price");
-	    System.out.println("+" + repeatCharacter('-', 60) + "+");
-        int i = 1;
+	    DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+	    DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+	    System.out.println("+" + repeatCharacter('-', 75) + "+");
+	    System.out.printf("| %-15s | %-20s | %-25s | %-7s |\n", "Show Date", "Show Time", "Movie Title", "Price");
+	    System.out.println("+" + repeatCharacter('-', 75) + "+");
+
 	    for (Show show : shows) {
-	        System.out.printf("| %-20s | %-20s | %-5d |\n",
-	               i++ + ". " + show.getDateTime().format(DATE_TIME_FORMATTER),
+	        System.out.printf("| %-15s | %-20s | %-25s | %-7d |\n",
+	                show.getDateTime().format(DATE_FORMATTER),
+	                show.getDateTime().format(TIME_FORMATTER),
 	                show.getMovie().getTitle(),
 	                show.getMovie().getPrice());
 	    }
 
-	    System.out.println("+" + repeatCharacter('-', 60) + "+");
+	    System.out.println("+" + repeatCharacter('-', 75) + "+");
 	}
 
 	private String repeatCharacter(char ch, int count) {
@@ -176,7 +179,7 @@ public class TicketCounter {
 		    System.out.println("+----------------------------------------+");
 	}
 
-	private void menu() {
+	private void displayMenu() {
 		System.out.println("+--------------------------------+");
 		System.out.println("|           Main Menu            |");
 		System.out.println("+--------------------------------+");
@@ -188,18 +191,32 @@ public class TicketCounter {
 	}
 
 	private void printMoviesList(List<Movie> availableMovies) {
-        System.out.println("┌──────────────────────────── Available Movies ────────────────────────────────────────────┐");
-        System.out.printf( "|%-4s | %-25s | %-20s | %-40s |\n", "No.", "Title", "Director", "Genre");
-        System.out.println("|─────┼───────────────────────────────────────────────┼──────────────────────┼────────────|");
+	    System.out.println("┌──────────────────────────── Available Movies ───────────────────────────────────────────┐");
+	    System.out.printf("|%-4s | %-25s | %-20s | %-40s |\n", "No.", "Title", "Director", "Genre");
+	    System.out.println("|─────┼───────────────────────────────────────────────┼──────────────────────┼────────────|");
 
-        for (int i = 0; i < availableMovies.size(); i++) {
-            Movie movie = availableMovies.get(i);
-            System.out.printf("| %-3d | %-25s | %-20s | %-40s |\n", (i + 1), movie.getTitle(), movie.getDirector(), movie.getGenre());
-        }
+	    for (int i = 0; i < availableMovies.size(); i++) {
+	        Movie movie = availableMovies.get(i);
+	        System.out.printf("| %-3d | %-25s | %-20s | %-40s |\n", (i + 1), truncateString(movie.getTitle(), 25), truncateString(movie.getDirector(), 20), truncateString(formatGenre(movie.getGenre()), 30));
+	    }
 
-        System.out.println("└─────────────────────────────────────────────────────────────────────────────────────────┘");
-        System.out.println("0. Back");
-    }
+	    System.out.println("└─────────────────────────────────────────────────────────────────────────────────────────┘");
+	    System.out.println("0. Back");
+	    System.out.println("Select movie for booking a ticket");
+	}
+
+	private String truncateString(String input, int maxLength) {
+	    return input.length() > maxLength ? input.substring(0, maxLength - 3) + "..." : input;
+	}
+
+	private String formatGenre(List<String> genres) {
+	    StringBuilder genreString = new StringBuilder();
+	    for (String genre : genres) {
+	        genreString.append(genre).append(", ");
+	    }
+	    return genreString.length() > 2 ? genreString.substring(0, genreString.length() - 2) : genreString.toString();
+	}
+
 
 	public void printTickets(List<Ticket> bookedTickets) {
 		for(Ticket ticket:bookedTickets) {
