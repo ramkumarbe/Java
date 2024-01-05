@@ -23,6 +23,8 @@ import com.ramkumarbe.consoleApplication.moviebooking.dto.User;
 public class MovieRepository {
 	private static MovieRepository repository = null;
 
+	private Connection connection;
+	private Statement statement;
 	private List<Movie> moviesList = new ArrayList<>();
 
 	private MovieRepository() {}
@@ -34,27 +36,26 @@ public class MovieRepository {
 		}
 		return repository;
 	}
-
-	private Connection getConnection() throws SQLException {
+    
+	public void getConnection() throws SQLException, ClassNotFoundException {
 		String url = "jdbc:mysql://localhost:3306/movie_ticket_booking";
 		String username = "root";
-		String password = "1234";
-		Connection connection = DriverManager.getConnection(url, username, password);
-		return connection;
+		String password = "";
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		connection = DriverManager.getConnection(url, username, password);
 	}
 
-	private Statement getStatement() throws SQLException {
-		Statement statement = getConnection().createStatement();
-		return statement;
+	public void getStatement() throws SQLException, ClassNotFoundException {
+		statement = connection.createStatement();
 	}
 
 	public void loadMovies() throws SQLException {
-		getMovies(getStatement(), "SELECT * FROM movie");
+		getMoviesWithUpcomingShows();
 	}
 
 	public void addUser(User user) throws SQLException {
 		String query = "INSERT INTO user (username, password, mobile_number, email) VALUES (?, ?, ?, ?)";
-		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
 
 		preparedStatement.setString(1, user.getUserName());
 		preparedStatement.setString(2, user.getPassword());
@@ -64,25 +65,28 @@ public class MovieRepository {
 		preparedStatement.executeUpdate();
 	}
 
-	private void getMovies(Statement statement, String query) throws SQLException {
-		ResultSet resultSet = statement.executeQuery(query);
-		while (resultSet.next()) {
-			Movie movie = getMovie(resultSet);
-			moviesList.add(movie);
-		}
-	}
+	private void getMoviesWithUpcomingShows() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT DISTINCT m.* FROM movie m " +
+                                                     "JOIN movie_show_schedule s ON m.title = s.movie_title " +
+                                                     "WHERE s.show_datetime > NOW() order by s.show_datetime");
 
-	private Movie getMovie(ResultSet resultSet) throws SQLException {
-		String title = resultSet.getString("title");
-		String director = resultSet.getString("director");
-		List<String> genre = Arrays.asList(resultSet.getString("genre").split(","));
-		int price = resultSet.getInt("price");
+        while (resultSet.next()) {
+            Movie movie = getMovie(resultSet);
+            moviesList.add(movie);
+        }
+    }
 
-		return new Movie(title, director, genre, price);
-	}
+    private Movie getMovie(ResultSet resultSet) throws SQLException {
+        String title = resultSet.getString("title");
+        String director = resultSet.getString("director");
+        List<String> genre = Arrays.asList(resultSet.getString("genre").split(","));
+        int price = resultSet.getInt("price");
+
+        return new Movie(title, director, genre, price);
+    }
 
 	public Map<String, User> getUsers() throws SQLException {
-		return getUsers(getStatement(), "SELECT * FROM user");
+		return getUsers(statement, "SELECT * FROM user");
 	}
 
 	private User getUser(ResultSet resultSet) throws SQLException {
@@ -107,8 +111,8 @@ public class MovieRepository {
 		List<Show> showsList = new ArrayList<>();
 		String query = "SELECT s.show_datetime," + "m.title AS movie_title,  m.director,  m.genre,  m.price "
 				+ "FROM  movie_show_schedule s " + "JOIN  movie m ON s.movie_title = m.title " + "where movie_title = "
-				+ "'" + selectedMovie.getTitle() + "'";
-		ResultSet resultSet = getStatement().executeQuery(query);
+				+ "'" + selectedMovie.getTitle() + "' AND s.show_datetime > NOW() order by s.show_datetime";
+		ResultSet resultSet = statement.executeQuery(query);
 		while (resultSet.next()) {
 			LocalDateTime dateTime = getDateTime(resultSet);
 
@@ -140,7 +144,7 @@ public class MovieRepository {
 				+ "JOIN movie_show_schedule ON ticket.show_id = movie_show_schedule.show_id "
 				+ "WHERE movie_show_schedule.show_datetime = ?";
 
-		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setObject(1, selectedShow.getDateTime());
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
@@ -153,7 +157,7 @@ public class MovieRepository {
 	public void insertBookedTickets(Ticket ticket) throws SQLException {
 		String query = "INSERT INTO ticket (show_id, seat_number, username) VALUES (?, ?, ?)";
 		int showId = getShowId(ticket);
-		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		List<Integer> seats = ticket.getSeats();
 		User user = ticket.getUser();
 		System.out.println(seats);
@@ -170,7 +174,7 @@ public class MovieRepository {
 
 		String query = "SELECT show_id FROM movie_show_schedule WHERE show_datetime = ?";
 
-		PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setTimestamp(1, Timestamp.valueOf(ticket.getShow().getDateTime()));
 
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -187,7 +191,7 @@ public class MovieRepository {
 		String query = "SELECT m.title,m.director,m.genre,m.price,s.show_datetime,t.seat_number FROM movie_ticket_booking.ticket as t "
 				+ "join movie_show_schedule as s on t.show_id = s.show_id "
 				+ "join movie as m on s.movie_title = m.title " + "where t.username = '" + user.getUserName() + "'";
-		ResultSet resultSet = getStatement().executeQuery(query);
+		ResultSet resultSet = statement.executeQuery(query);
 		while (resultSet.next()) {
 			LocalDateTime dateTime = getDateTime(resultSet);
 			Movie movie = getMovie(resultSet);
@@ -204,7 +208,7 @@ public class MovieRepository {
 	public Map<Integer, String> getGenres() throws SQLException {
 		Map<Integer, String> genres = new HashMap<>();
 		String query = "Select * from genres";
-		ResultSet resultSet = getStatement().executeQuery(query);
+		ResultSet resultSet = statement.executeQuery(query);
 		while(resultSet.next()) {
 			int id = resultSet.getInt("genre_id");
 			String genre = resultSet.getString("genre");
@@ -216,7 +220,7 @@ public class MovieRepository {
 	public void uploadNewShow(Show show) throws SQLException {
 		String query = "Insert Into movie_show_schedule (show_datetime,movie_title)"
 			     + "Values (?,?)";
-		PreparedStatement statement = getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		Timestamp timeStamp = Timestamp.valueOf(show.getDateTime());
 		statement.setTimestamp(1, timeStamp);
 		statement.setString(2, show.getMovie().getTitle());
@@ -227,7 +231,7 @@ public class MovieRepository {
 	public void uploadNewMovie(Movie movie) throws SQLException {
 		String query = "Insert Into movie (title,director,genre,price)"
 				     + "Values (?,?,?,?)";
-		PreparedStatement statement = getConnection().prepareStatement(query);
+		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, movie.getTitle());
 		statement.setString(2, movie.getDirector());
 		statement.setString(3, String.join(",",movie.getGenre()));

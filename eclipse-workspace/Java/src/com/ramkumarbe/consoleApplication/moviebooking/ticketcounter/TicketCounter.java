@@ -131,7 +131,21 @@ public class TicketCounter {
 		int n = Util.getInstance().getInt();
 		return viewModel.getSelectedShow(n);
 	}
+	
+	private Movie selectMovie() {
+		showMovies();
+		int n = Util.getInstance().getInt();
+		return viewModel.selectedMovie(n);
+	}
 
+	private void showMovies() {
+		List<Movie> moviesList = viewModel.getMoviesList();
+		printMoviesList(moviesList);
+	}
+
+	private void viewBookedTickets() {
+		viewModel.viewBookedTickets(currentUser);
+	}
 	private void printShows(List<Show> shows) {
 	    DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 	    DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
@@ -157,23 +171,8 @@ public class TicketCounter {
 	    }
 	    return sb.toString();
 	}
-
-	private Movie selectMovie() {
-		showMovies();
-		int n = Util.getInstance().getInt();
-		return viewModel.selectedMovie(n);
-	}
-
-	private void showMovies() {
-		List<Movie> moviesList = viewModel.getMoviesList();
-		printMoviesList(moviesList);
-	}
-
-	private void viewBookedTickets() {
-		viewModel.viewBookedTickets(currentUser);
-	}
 	
-	public void showMessage(String message) {
+	void showMessage(String message) {
 		 System.out.println("+----------------------------------------+");
 		    System.out.println("|   " + message+"       |");
 		    System.out.println("+----------------------------------------+");
