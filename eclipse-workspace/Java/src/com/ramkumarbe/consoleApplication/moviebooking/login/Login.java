@@ -74,4 +74,8 @@ public class Login {
         System.out.println();
         return user;
     }
+
+	public void showMessage(String message) {
+		System.out.println(message);
+	}
 }

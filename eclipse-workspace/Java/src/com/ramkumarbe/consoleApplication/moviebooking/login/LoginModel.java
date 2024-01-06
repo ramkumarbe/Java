@@ -8,24 +8,20 @@ import com.ramkumarbe.consoleApplication.moviebooking.dto.User;
 import com.ramkumarbe.consoleApplication.moviebooking.repository.MovieRepository;
 
 public class LoginModel {
-	private Map<String,User> usersList;
 	private LoginPresenter presenter;
 	
 	LoginModel(LoginPresenter loginPresenter) {
 		this.presenter = loginPresenter;
-		getUsersList();
 	}
 	
-	private void getUsersList() {
-		try {
-			usersList = MovieRepository.getInstance().getUsers();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	public User getUser(String userName, String password) {
-		User currentUser = usersList.get(userName);
-		if(currentUser==null || !currentUser.getPassword().equals(password)) {
+		User currentUser = null;
+		try {
+			currentUser = MovieRepository.getInstance().getUser(userName,password);
+		} catch (SQLException e) {
+			presenter.showMessage("Cannot get user details");
+		}
+		if(currentUser==null) {
 			return null;
 		}
 		return currentUser;

@@ -98,7 +98,7 @@ public class TicketCounter {
 	    int seatsPerRow = 10;
 	    int spacesBetween = 3; // Number of spaces between the first and last 5 seats
 
-	    System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 1) + "+");
+	    System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 3) + "+");
 
 	    for (int i = 0; i < numRows; i++) {
 	        for (int j = 0; j < seatsPerRow; j++) {
@@ -114,7 +114,7 @@ public class TicketCounter {
 	            }
 	        }
 	        System.out.println("|");
-	        System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 1) + "+");
+	        System.out.println("+" + repeatChar('-', (seatsPerRow + spacesBetween) * 6 + 3) + "+");
 	    }
 	    System.out.println("0. Back");
 	}
@@ -149,9 +149,9 @@ public class TicketCounter {
 	private void printShows(List<Show> shows) {
 	    DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 	    DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-	    System.out.println("+" + repeatCharacter('-', 75) + "+");
+	    System.out.println("+" + repeatCharacter('-', 78) + "+");
 	    System.out.printf("| %-15s | %-20s | %-25s | %-7s |\n", "Show Date", "Show Time", "Movie Title", "Price");
-	    System.out.println("+" + repeatCharacter('-', 75) + "+");
+	    System.out.println("+" + repeatCharacter('-', 78) + "+");
 
 	    for (Show show : shows) {
 	        System.out.printf("| %-15s | %-20s | %-25s | %-7d |\n",
@@ -161,7 +161,7 @@ public class TicketCounter {
 	                show.getMovie().getPrice());
 	    }
 
-	    System.out.println("+" + repeatCharacter('-', 75) + "+");
+	    System.out.println("+" + repeatCharacter('-', 78) + "+");
 	}
 
 	private String repeatCharacter(char ch, int count) {
@@ -190,16 +190,16 @@ public class TicketCounter {
 	}
 
 	private void printMoviesList(List<Movie> availableMovies) {
-	    System.out.println("┌──────────────────────────── Available Movies ───────────────────────────────────────────┐");
-	    System.out.printf("|%-4s | %-25s | %-20s | %-40s |\n", "No.", "Title", "Director", "Genre");
-	    System.out.println("|─────┼───────────────────────────────────────────────┼──────────────────────┼────────────|");
+	    System.out.println("┌─────────────────────────────────── Available Movies ────────────────────────────────────────────┐");
+	    System.out.printf("|%-4s | %-25s | %-20s | %-38s |\n", "No.", "Title", "Director", "Genre");
+	    System.out.println("|─────┼───────────────────────────┼──────────────────────┼────────────────────────────────────────|");
 
 	    for (int i = 0; i < availableMovies.size(); i++) {
 	        Movie movie = availableMovies.get(i);
-	        System.out.printf("| %-3d | %-25s | %-20s | %-40s |\n", (i + 1), truncateString(movie.getTitle(), 25), truncateString(movie.getDirector(), 20), truncateString(formatGenre(movie.getGenre()), 30));
+	        System.out.printf("| %-3d | %-25s | %-20s | %-38s |\n", (i + 1), truncateString(movie.getTitle(), 25), truncateString(movie.getDirector(), 20), truncateString(formatGenre(movie.getGenre()), 30));
 	    }
 
-	    System.out.println("└─────────────────────────────────────────────────────────────────────────────────────────┘");
+	    System.out.println("└─────────────────────────────────────────────────────────────────────────────────────────────────┘");
 	    System.out.println("0. Back");
 	    System.out.println("Select movie for booking a ticket");
 	}

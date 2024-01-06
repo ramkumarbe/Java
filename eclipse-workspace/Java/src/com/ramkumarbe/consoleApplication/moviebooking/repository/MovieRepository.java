@@ -66,7 +66,7 @@ public class MovieRepository {
 	}
 
 	private void getMoviesWithUpcomingShows() throws SQLException {
-        ResultSet resultSet = statement.executeQuery("SELECT DISTINCT m.* FROM movie m " +
+        ResultSet resultSet = statement.executeQuery("SELECT m.* FROM movie m " +
                                                      "JOIN movie_show_schedule s ON m.title = s.movie_title " +
                                                      "WHERE s.show_datetime > NOW() order by s.show_datetime");
 
@@ -84,28 +84,6 @@ public class MovieRepository {
 
         return new Movie(title, director, genre, price);
     }
-
-	public Map<String, User> getUsers() throws SQLException {
-		return getUsers(statement, "SELECT * FROM user");
-	}
-
-	private User getUser(ResultSet resultSet) throws SQLException {
-		String userName = resultSet.getString("username");
-		String pass = resultSet.getString("password");
-		String mailId = resultSet.getString("email");
-		String phoneNumber = resultSet.getString("mobile_number");
-		return new User(userName, pass, mailId, phoneNumber);
-	}
-
-	private Map<String, User> getUsers(Statement statement, String query) throws SQLException {
-		ResultSet resultSet = statement.executeQuery(query);
-		Map<String, User> usersList = new HashMap<>();
-		while (resultSet.next()) {
-			User user = getUser(resultSet);
-			usersList.put(user.getUserName(), user);
-		}
-		return usersList;
-	}
 
 	public List<Show> getShowsList(Movie selectedMovie) throws SQLException {
 		List<Show> showsList = new ArrayList<>();
@@ -243,4 +221,16 @@ public class MovieRepository {
 		return moviesList;
 	}
 
+	public User getUser(String username, String password) throws SQLException {
+		String query = "Select * from user where username = '"+username+"' "
+				+ "and password = '"+password+"'";
+		ResultSet resultSet = statement.executeQuery(query);
+		User user = null;
+		if(resultSet.next()) {
+			String mobileNumber = resultSet.getString("mobile_number");
+			String emailId = resultSet.getString("email");
+			user = new User(username,password,mobileNumber,emailId);
+		}
+		return user;
+	}
 }

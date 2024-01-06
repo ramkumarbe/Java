@@ -4,10 +4,10 @@ import com.ramkumarbe.consoleApplication.moviebooking.dto.User;
 
 public class LoginPresenter {
 
-	private Login login;
+	private Login view;
 	private LoginModel model;
 	public LoginPresenter(Login login) {
-		this.login = login;
+		this.view = login;
 		this.model = new LoginModel(this);
 	}
 	
@@ -17,5 +17,9 @@ public class LoginPresenter {
 	
 	public User getUser(String userName, String password) {
 		return model.getUser(userName,password);
+	}
+
+	public void showMessage(String message) {
+		view.showMessage(message);
 	}
 }
