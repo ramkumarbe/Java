@@ -66,7 +66,7 @@ public class MovieRepository {
 	}
 
 	private void getMoviesWithUpcomingShows() throws SQLException {
-        ResultSet resultSet = statement.executeQuery("SELECT m.* FROM movie m " +
+        ResultSet resultSet = statement.executeQuery("SELECT distinct(m.title),m.director,m.genre,m.price FROM movie m " +
                                                      "JOIN movie_show_schedule s ON m.title = s.movie_title " +
                                                      "WHERE s.show_datetime > NOW() order by s.show_datetime");
 
